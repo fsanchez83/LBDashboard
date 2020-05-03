@@ -9,7 +9,7 @@ Ejemplo subido aquí: https://app.powerbi.com/view?r=eyJrIjoiNmYxN2FiYjAtMzdiYS0
 
 Está creado sobre los datos de mi usuario de Letterboxd (https://letterboxd.com/danielquinn/), pero cambiando los csv de base debería funcionar para los de cualquiera.
 
-# ¿Cómo puedo crear el mío?
+# ¿Cómo funciona?
 
 1) Se exportan los ficheros de Letterboxd desde esta URL: https://letterboxd.com/settings/data/. De los ficheros que se descargan, hay que quedarse con dos: ratings.csv y diary.csv.
 
@@ -19,24 +19,28 @@ Está creado sobre los datos de mi usuario de Letterboxd (https://letterboxd.com
 
 4) Una vez se tienen los 3 csv, ya se puede ejecutar el archivo pbix. Para ello, hay que instalarse el Power BI Desktop, que es gratuito (https://powerbi.microsoft.com/es-es/downloads/). El informe, que contiene los datos de los csv importados internamente, se puede ejecutar en local con el propio Desktop, o también en internet con una cuenta gratuita de Power BI (no permite compartirlo con otras personas, ya que eso requiere la licencia de pago, pero sí se puede ejecutar para uno mismo en la nube o hacerlo público en internet).
 
-# ¿Qué tengo que hacer?
+# ¿Qué tengo que hacer para crear el mío sobre mis datos?
 
-1) Poder ejecutar scripts Python, es decir, instalarte Python 3, e instalar las librerías pandas y tmdbsimple: 
+1) Obtener los ficheros ratings.csv y diary.csv de tu cuenta de Letterboxd como se indica en el apartado anterior.
+
+2) Poder ejecutar scripts Python, es decir, instalarte Python 3, e instalar las librerías pandas y tmdbsimple: 
     ```
     pip3 install pandas
     pip3 install tmdbsimple
     ```
     
-2) Conseguir una API Key de The Movie Database. Para ello:
-    2.1) Registrarte y verificar la cuenta: https://www.themoviedb.org/account/signup
-    2.2) Hacer login en la cuenta: https://www.themoviedb.org/login
-    2.3) En el perfil, Configuración, se llega a la página de la API: https://www.themoviedb.org/settings/api
-    2.4) Seguir las instrucciones para obtener la *API KEY*
+3) Conseguir una API Key de The Movie Database. Para ello:
+    3.1) Registrarte y verificar la cuenta: https://www.themoviedb.org/account/signup
+    3.2) Hacer login en la cuenta: https://www.themoviedb.org/login
+    3.3) En el perfil, Configuración, se llega a la página de la API: https://www.themoviedb.org/settings/api
+    3.4) Seguir las instrucciones para obtener la *API KEY*
 
-3) Insertar la *API KEY* obtenida en la línea del código de *CreateDatabase.py* donde se indica, al principio:
+4) Insertar la *API KEY* obtenida en la línea del código de *CreateDatabase.py* donde se indica, al principio:
     ```
     tmdb.API_KEY = 'INTRODUCE-AQUI-TU-API_KEY'
     ```
+    
+5) Con esto, ejecutar el script *CreateDatabase.py*. Cuando termine (puede tardar si hay muchas películas, ya que la API solo admite 30 consultas cada 10 segundos), deberá aparecer junto a los ficheros un nuevo archivo: *dataset_pelis.csv*. Con esto, ya está todo lo necesario para poder ejecutar el informe de Power BI.
 
-4) Instalar Power BI Desktop. Opcionalmente, crear una cuenta para ejecutar el informe en la nube y que esté disponible e internet, ya sea para uno mismo o público.
+6) Instalar Power BI Desktop. Opcionalmente, crear una cuenta para ejecutar el informe en la nube y que esté disponible e internet, ya sea para uno mismo o público.
 
