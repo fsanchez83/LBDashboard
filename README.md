@@ -9,7 +9,7 @@ Ejemplo subido aquí: https://app.powerbi.com/view?r=eyJrIjoiNmYxN2FiYjAtMzdiYS0
 
 Está creado sobre los datos de mi usuario de Letterboxd (https://letterboxd.com/danielquinn/), pero cambiando los csv de base debería funcionar para los de cualquiera.
 
-# ¿Cómo funciona?
+# ¿Cómo puedo crear el mío?
 
 1) Se exportan los ficheros de Letterboxd desde esta URL: https://letterboxd.com/settings/data/. De los ficheros que se descargan, hay que quedarse con dos: ratings.csv y diary.csv.
 
