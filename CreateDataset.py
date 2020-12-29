@@ -9,7 +9,7 @@ import tmdbsimple as tmdb
 import pandas as pd
 import os.path
 
-tmdb.API_KEY = 'INTRODUCE-AQUI-TU-API_KEY'
+tmdb.API_KEY = 'INTRODUCIR PROPIA API KEY DE TMDB'
 
 dataset_pelis='dataset_pelis.csv'
 
@@ -18,7 +18,7 @@ dataset_pelis='dataset_pelis.csv'
 lista_ratings=pd.read_csv('ratings.csv')
 
 if os.path.isfile(dataset_pelis):
-    lista_dataset=pd.read_csv(dataset_pelis, sep=';')
+    lista_dataset=pd.read_csv(dataset_pelis, sep=';', encoding='utf-8')
     last_film=lista_dataset.iloc[-1]['Letterboxd URI']
 else:
     last_film='ultimapeliculaquenoexiste'
@@ -30,7 +30,7 @@ df_films = pd.DataFrame(columns = Atributos_peli)
 # Se invierte la lista de rating para empezar a insertar desde las ultimas vistas
 
 lista_ratings=lista_ratings.iloc[::-1]
-
+#lista_ratings=lista_ratings.iloc[1800::]
 
 search = tmdb.Search()
 contador=0
@@ -42,7 +42,8 @@ for index, row in lista_ratings.iterrows():
     
     contador=contador+1
     letterboxd_uri=row['Letterboxd URI']
-    
+    #print(last_film)
+    #print(letterboxd_uri)
     if letterboxd_uri == last_film:
         break
     
@@ -53,13 +54,23 @@ for index, row in lista_ratings.iterrows():
         if len(response['results'])<1:
             print('No se encuentra ',row['Name'])
         else:
-            id_peli=response['results'][0]['id']
-            titulo=response['results'][0]['title']
+            hace_match=0
+            for opciones in response['results']:
+                if row['Name']==opciones['title']:                    
+                    hace_match=1
+                    id_peli=opciones['id']
+                    titulo=opciones['title']
+                    break
+            if hace_match==0:
+                id_peli=response['results'][0]['id']
+                titulo=response['results'][0]['title']
+                print('No ha hecho match en ninguna opcion: ',titulo)
     
     # Nueva consulta a TMDB para sacar detalles de la pelicula
     
+            print(titulo)
             generos=[]
-            movie = tmdb.Movies(response['results'][0]['id'])
+            movie = tmdb.Movies(id_peli)
             response=movie.info()
             fecha=response['release_date']
             resumen=response['overview']
@@ -109,8 +120,8 @@ for index, row in lista_ratings.iterrows():
 
 # Copia de seguridad que se guarda cada 150 pelis por si hubiera algun fallo, no tener que empezar luego de 0
 
-            if contador==150:
-                df_films.to_csv('dataset_pelis-dif.csv')
+            if contador==50:
+                df_films.to_csv('dataset_pelis-dif.csv', sep=';',index=False)
                 print(contador)
                 contador=0
             
