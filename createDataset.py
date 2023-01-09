@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 import sys
 import os.path
 
-tmdb.API_KEY = 'PON TU API_KEY'
+tmdb.API_KEY = '8a079fd45df94dd519bfa7220af2414d'
 
 # Leer la lista básica de pelis
 
@@ -47,8 +47,9 @@ def get_tmdb_id(url):
 # Mezclo las dos listas en una, que tendra NaN en las nuevas pelis
 
 
-lista_merged = lista_basica.merge(lista_con_id, 'left')
+lista_merged = lista_basica.merge(lista_con_id, 'left', on="Letterboxd URI")
 lista_nuevas = lista_merged[lista_merged['tmdb_id'].isnull()]
+lista_nuevas = lista_nuevas.rename(columns={"Name_x": "Name","Date_x":"Date","Year_x":"Year","Rating_x": "Rating"})
 
 lista_nuevas_id = lista_nuevas.copy()
 
