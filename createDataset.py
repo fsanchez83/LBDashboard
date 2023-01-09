@@ -50,6 +50,7 @@ def get_tmdb_id(url):
 lista_merged = lista_basica.merge(lista_con_id, 'left', on="Letterboxd URI")
 lista_nuevas = lista_merged[lista_merged['tmdb_id'].isnull()]
 lista_nuevas = lista_nuevas.rename(columns={"Name_x": "Name","Date_x":"Date","Year_x":"Year","Rating_x": "Rating"})
+lista_nuevas = lista_nuevas.drop(lista_nuevas.columns[[5, 6, 7, 8]],axis = 1)
 
 lista_nuevas_id = lista_nuevas.copy()
 
@@ -59,6 +60,7 @@ for index, row in lista_nuevas.iterrows():
     lista_nuevas_id.loc[index, 'tmdb_type'] = tmdb_type
     lista_nuevas_id.loc[index, 'tmdb_id'] = tmdb_id
     print(row['Name'])
+
 
 lista_con_id = lista_con_id.append(lista_nuevas_id)
 
